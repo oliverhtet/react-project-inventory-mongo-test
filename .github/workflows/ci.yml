@@ -1,14 +1,15 @@
-name: CI
+name: Continuous Integration
 
 on:
   push:
-    branches: [main]
+    branches: [master, develop]
   pull_request:
-    branches: [main]
+    branches: [master, develop]
+  workflow_dispatch:
 
 jobs:
-  lint:
-    name: Lint
+  validate:
+    name: Validate Code
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -23,12 +24,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
+      - name: Lint code
         run: npm run lint
 
-  typecheck:
-    name: TypeScript Check
+      - name: Check types
+        run: npx tsc --noEmit
+
+  test:
+    name: Run Tests
     runs-on: windows-latest
+    needs: validate
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -42,12 +47,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run TypeScript check
-        run: npx tsc --noEmit
+      - name: Run tests
+        run: npm test
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
   build:
-    name: Build
+    name: Build Application
     runs-on: windows-latest
+    needs: test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -66,3 +75,13 @@ jobs:
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            .next/
+            public/
+            package.json
+            next.config.js

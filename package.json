@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node scripts/seed.js",
+    "seed:force": "node scripts/seed.js --force",
+    "test": "echo \"No tests yet\" && exit 0"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -38,35 +41,34 @@
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
     "autoprefixer": "^10.4.20",
-    "bcryptjs": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
+    "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
     "input-otp": "1.4.1",
-    "jsonwebtoken": "latest",
     "lucide-react": "^0.454.0",
-    "mongoose": "^8.12.1",
-    "next": "15.1.0",
+    "next": "14.2.16",
     "next-themes": "^0.4.4",
+    "react": "^19",
+    "react-day-picker": "8.10.1",
     "react-dom": "^19",
     "react-hook-form": "^7.54.1",
     "react-resizable-panels": "^2.1.7",
     "recharts": "2.15.0",
     "sonner": "^1.7.1",
-    "stripe": "latest",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "vaul": "^0.9.6",
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/mongoose": "^5.11.96",
-    "@types/node": "^22.13.10",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/node": "^22",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "postcss": "^8",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }
 }
+
